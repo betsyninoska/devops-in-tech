@@ -1,8 +1,18 @@
-FROM node:lts-alpine
-WORKDIR /express-frontend
-COPY requirements.txt /app
-RUN pip install -r requirements.txt
-COPY . .
+FROM node:16-alpine
+
+WORKDIR /app
+
+COPY package*.json /app
+
+RUN npm install
+
+COPY . /app
+
+
 ENV PORT=3000
+ENV PRODUCTS_SERVICE=host.docker.internal
+ENV SHOPPING_CART_SERVICE=host.docker.internal
+
 EXPOSE $PORT
-CMD [ "node", "server.js" ]
+
+CMD ["npm","start"]
