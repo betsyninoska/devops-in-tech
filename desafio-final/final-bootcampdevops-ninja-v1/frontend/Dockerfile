@@ -9,7 +9,7 @@ RUN npm install
 COPY . /app
 
 
-ENV PORT=3000
+ENV PORT=3002
 ENV PRODUCTS_SERVICE=host.docker.internal
 ENV SHOPPING_CART_SERVICE=host.docker.internal
 
