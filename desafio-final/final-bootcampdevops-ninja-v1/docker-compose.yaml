@@ -24,6 +24,7 @@ services:
       - .:/app
   ms-shopping-cart:
     build: /shopping-cart
+    container_name: shopping-cart
     ports:
       - "3002:3002"
     environment:
