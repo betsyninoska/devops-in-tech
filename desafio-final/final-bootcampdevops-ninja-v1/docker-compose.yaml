@@ -1,26 +1,33 @@
-version: "3.9"
+version: "3.0"
 services:
-  web:
-    build: services/frontend
+  ms-frontend:
+    build: frontend
     ports:
-      - "5000:5000"
-    networks:
-      - frontend
-      - backend
-  reader:
-    build: services/reader
-    ports:
-      - "3000:3001"
-    networks:
-      - frontend
-  writer:
-    build: services/writer
-    ports:
-      - "8080:8080"
+      - "3000:3000"
     networks:
       - backend
-  reids:
-    image: "redis:alpine"
-
-networks:
-  backend:
+    environment:
+    - PRODUCTS_SERVICE=host.docker.internal
+    - SHOPPING_CART_SERVICE=host.docker.internal
+    volumes:
+      - .:/app
+  ms-products:
+    build: /products
+    ports:
+      - "3001:3001"
+    environment:
+    - PRODUCTS_SERVICE=host.docker.internal
+    - SHOPPING_CART_SERVICE=host.docker.internal
+    networks:
+      - frontend
+    volumes:
+      - .:/app
+  ms-shopping-cart:
+    build: /shopping-cart
+    ports:
+      - "3002:3002"
+    environment:
+    - PRODUCTS_SERVICE=host.docker.internal
+    - SHOPPING_CART_SERVICE=host.docker.internal
+    volumes:
+      - .:/app
